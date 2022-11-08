@@ -1,0 +1,15 @@
+
+.facerecognition{
+    display:flex;
+    justify-content: center;
+}
+
+#myCanvas{
+    
+    opacity: 1;
+    position: absolute;
+}
+
+img{
+    margin-bottom: 50px;
+}

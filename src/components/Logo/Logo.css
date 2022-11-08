@@ -1,0 +1,12 @@
+.Tilt {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, #5c67ad -100%, rgb(15, 15, 207) 100%, #5c67ad 0%); 
+    border-radius: 30px;
+    margin-top: -45px; 
+    margin-bottom: 70px;   
+    
+}
+
+.under{
+    z-index: -1;
+}
