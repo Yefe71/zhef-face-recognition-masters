@@ -3,8 +3,7 @@ import "./facerecognition.css"
 import * as faceapi from "face-api.js";
 
 
-
-function FaceRecognition({imageUrl}) {
+function FaceRecognition({imageUrl, id, updateCount}) {
 
   
 
@@ -13,7 +12,7 @@ function FaceRecognition({imageUrl}) {
 
 
   const handleImage = async () => {
-    console.log({imageUrl}, 'im here first')
+    console.log(imageUrl, 'im here firsts')
     const detections = await faceapi
     .detectAllFaces(imgRef.current, new faceapi.TinyFaceDetectorOptions())
     .withFaceLandmarks()
@@ -33,26 +32,40 @@ function FaceRecognition({imageUrl}) {
     faceapi.draw.drawDetections(canvasRef.current, resized)
     faceapi.draw.drawFaceExpressions(canvasRef.current, resized)
     faceapi.draw.drawFaceLandmarks(canvasRef.current, resized)
-   
+
   }
 
   useEffect(()=>{
-
+   
     const loadModels = () =>{
-      console.log({imageUrl}, 'im here')
+      console.log(imageUrl, 'im here')
       Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
         faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
         faceapi.nets.faceExpressionNet.loadFromUri('/models'),
         
       ])
+        
         .then(handleImage)
         .catch((e) => console.log(e, "lol"))
     };
 
-    imgRef.current && loadModels()
+    fetch('http://localhost:3000/image', {
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        id: id
+      })
+    })
+    .then(response => response.json())
+    .then(count => {
+      updateCount(count)   
+    })
+    
 
-  },[{imageUrl}])
+    imgRef.current && loadModels()
+    
+  },[imageUrl])
 
 
   return (

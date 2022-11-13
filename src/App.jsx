@@ -20,14 +20,31 @@ constructor(){
   this.state = {
      input: '',
      imageUrl: '',
-     route: 'signin',
-     isSignedIn: false
+     route: 'signin', 
+     isSignedIn: false,
+     user:{
+      id: '',
+      name: '',
+      email: '',
+      entries: 0,
+      joined: ''
+     }
   }
   
   
 } 
 
 
+
+loadUser = (data) => {
+  this.setState({user: {
+    id: data.id,
+    name: data.name,
+    email: data.email,
+    entries: data.entries,
+    joined: data.joined
+  }})
+}
 
 onInputChange = (event) => {
   this.setState({input: event.target.value})
@@ -42,6 +59,11 @@ autoReloader = () => {
 onButtonSubmit = () => {
   this.setState({imageUrl: this.state.input})
 
+}
+
+updateCount = (count) => {
+  this.setState(Object.assign(this.state.user, {entries: count}))
+  console.log('niggas')
 }
 
 onRouteChange = (route) => {
@@ -74,12 +96,12 @@ render(){
         <div>
         
         
-        <Rank />
+        <Rank name={this.state.user.name} entries={this.state.user.entries}/>
         <ImageLinkForm onInputChange = {this.onInputChange} 
                        onButtonSubmit = {this.onButtonSubmit}
                        onRouteChange = {this.onRouteChange}/>
 
-        {!this.state.imageUrl == "" ? (<FaceRecognition imageUrl = {imageUrl}/>  ) 
+        {!this.state.imageUrl == "" ? (<FaceRecognition updateCount = {this.updateCount} id = {this.state.user.id} imageUrl = {imageUrl}/>  ) 
         : null}
         
         </div>
@@ -87,8 +109,8 @@ render(){
         
         :
         (this.state.route === 'signin' ? 
-        <Signin onRouteChange = {this.onRouteChange}/>
-        : <Register onRouteChange = {this.onRouteChange}/>
+        <Signin loadUser={this.loadUser} onRouteChange = {this.onRouteChange}/>
+        : <Register loadUser = {this.loadUser} onRouteChange = {this.onRouteChange}/>
         )
         
 
