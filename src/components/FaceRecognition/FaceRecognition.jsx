@@ -63,7 +63,7 @@ function FaceRecognition({imageUrl, id, updateCount}) {
     };
 
 
-    
+  
 
     imgRef.current && loadModels()
     
