@@ -12,7 +12,19 @@ import Register from './components/Register/Register';
 
 
 
-
+const initialState = {
+  input: '',
+  imageUrl: '',
+  route: 'signin', 
+  isSignedIn: false,
+  user:{
+   id: '',
+   name: '',
+   email: '',
+   entries: 0,
+   joined: ''
+  }
+}
 
 class App extends Component {
 constructor(){
@@ -63,7 +75,6 @@ onButtonSubmit = () => {
 
 updateCount = (count) => {
   this.setState(Object.assign(this.state.user, {entries: count}))
-  console.log('niggas')
 }
 
 onRouteChange = (route) => {
@@ -77,6 +88,8 @@ onRouteChange = (route) => {
   }
   else if (route === "signin"){
     this.setState({isSignedIn: false})
+    this.setState(initialState)
+
   }
  
   this.setState({route: route})

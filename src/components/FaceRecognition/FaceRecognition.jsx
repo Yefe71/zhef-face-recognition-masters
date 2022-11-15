@@ -33,6 +33,18 @@ function FaceRecognition({imageUrl, id, updateCount}) {
     faceapi.draw.drawFaceExpressions(canvasRef.current, resized)
     faceapi.draw.drawFaceLandmarks(canvasRef.current, resized)
 
+    fetch('http://localhost:3000/image', {
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        id: id
+      })
+    })
+    .then(response => response.json())
+    .then(count => {
+      updateCount(count)   
+    })
+    .catch(console.log)
   }
 
   useEffect(()=>{
@@ -50,17 +62,7 @@ function FaceRecognition({imageUrl, id, updateCount}) {
         .catch((e) => console.log(e, "lol"))
     };
 
-    fetch('http://localhost:3000/image', {
-      method: 'put',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        id: id
-      })
-    })
-    .then(response => response.json())
-    .then(count => {
-      updateCount(count)   
-    })
+
     
 
     imgRef.current && loadModels()
