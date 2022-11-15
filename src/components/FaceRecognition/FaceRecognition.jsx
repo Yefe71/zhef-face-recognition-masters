@@ -52,9 +52,9 @@ function FaceRecognition({imageUrl, id, updateCount}) {
     const loadModels = () =>{
       console.log(imageUrl, 'im here')
       Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-        faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-        faceapi.nets.faceExpressionNet.loadFromUri('/models'),
+        faceapi.nets.tinyFaceDetector.loadFromUri('/public/models'),
+        faceapi.nets.faceLandmark68Net.loadFromUri('/public/models'),
+        faceapi.nets.faceExpressionNet.loadFromUri('/public/models'),
         
       ])
         
